@@ -17,4 +17,4 @@
 obj/
 [Rr]elease*/
 _ReSharper*/
-src/packages/
+packages/
