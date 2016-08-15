@@ -16,12 +16,12 @@ namespace LewisTech.Utils.Tests.QueryHandlers
 
         public TestQueryResult Handle(TestQuery query)
         {
-            Trace.WriteLine("Handle started " + _stopwatch.ElapsedMilliseconds);
+            //Trace.WriteLine("Handle started " + _stopwatch.ElapsedMilliseconds);
 
 
             HandleWasCalled = true;
 
-            Trace.WriteLine("Handle finished " + _stopwatch.ElapsedMilliseconds);
+            //Trace.WriteLine("Handle finished " + _stopwatch.ElapsedMilliseconds);
 
             return new TestQueryResult();
         }

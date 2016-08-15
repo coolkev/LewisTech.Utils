@@ -3,7 +3,7 @@ using LewisTech.Utils.Command;
 
 namespace LewisTech.Utils.Tests.QueryHandlers
 {
-    public class TestCommandHandler : ICommandHandler<TestCommand, TestCommandResult>
+    internal class TestCommandHandler : ICommandHandler<TestCommand, TestCommandResult>
     {
         public bool HandleWasCalled { get; private set; }
 

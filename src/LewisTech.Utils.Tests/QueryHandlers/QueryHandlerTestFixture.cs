@@ -84,13 +84,17 @@ namespace LewisTech.Utils.Tests.QueryHandlers
 
             var stopwatch = Stopwatch.StartNew();
             var handler = new TestQueryHandler(stopwatch);
+                var processor = new QueryProcessor(t => handler);
 
-            var processor = new QueryProcessor(t => handler);
 
-            TestQueryResult result = processor.Process(new TestQuery());
+            for (var x = 0; x < 1000000; x++)
+            {
 
-            Assert.IsTrue(handler.HandleWasCalled);
+                TestQueryResult result = processor.Process(new TestQuery());
 
+                Assert.IsTrue(handler.HandleWasCalled);
+            }
         }
+       
     }
 }
