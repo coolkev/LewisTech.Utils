@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using LewisTech.Utils.Query;
 
@@ -16,14 +17,43 @@ namespace LewisTech.Utils.Tests.QueryHandlers
 
         public TestQueryResult Handle(TestQuery query)
         {
-            //Trace.WriteLine("Handle started " + _stopwatch.ElapsedMilliseconds);
-
+            
+            HandleWasCalled = true;
+            
+            return new TestQueryResult();
+        }
+    }
+     public class TestQueryHandler2 : IQueryHandler<TestQuery2, TestQueryResult>
+    {
+        public bool HandleWasCalled { get; private set; }
+        
+        public TestQueryResult Handle(TestQuery2 query)
+        {
 
             HandleWasCalled = true;
-
-            //Trace.WriteLine("Handle finished " + _stopwatch.ElapsedMilliseconds);
-
+            
             return new TestQueryResult();
+        }
+    }
+    public class TestQueryHandler3 : IQueryHandler<TestQuery3, TestQueryResult3>
+    {
+        public bool HandleWasCalled { get; private set; }
+        
+        public TestQueryResult3 Handle(TestQuery3 query)
+        {
+
+            HandleWasCalled = true;
+            
+            return new TestQueryResult3();
+        }
+    }
+    
+    public class TestQueryHandlerException : IQueryHandler<TestQuery, TestQueryResult>
+    {
+        
+        public TestQueryResult Handle(TestQuery query)
+        {
+            throw new Exception("Test Exception");
         }
     }
 }

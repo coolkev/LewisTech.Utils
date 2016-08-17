@@ -84,6 +84,7 @@
     <Compile Include="Query\QueryProcessor.cs" />
     <Compile Include="ResettableLazy.cs" />
     <Compile Include="Temporary.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

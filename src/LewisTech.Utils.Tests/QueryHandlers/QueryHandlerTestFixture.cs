@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using LewisTech.Utils.Query;
 using NUnit.Framework;
@@ -82,19 +83,48 @@ namespace LewisTech.Utils.Tests.QueryHandlers
         public void TestQueryProcessor()
         {
 
-            var stopwatch = Stopwatch.StartNew();
-            var handler = new TestQueryHandler(stopwatch);
-                var processor = new QueryProcessor(t => handler);
+
+            var processor = new QueryProcessor(t => new TestQueryHandler2());
 
 
             for (var x = 0; x < 1000000; x++)
             {
 
-                TestQueryResult result = processor.Process(new TestQuery());
+                TestQueryResult result = processor.Process(new TestQuery2());
 
-                Assert.IsTrue(handler.HandleWasCalled);
+                //Assert.IsTrue(handler.HandleWasCalled);
             }
         }
-       
+
+        [Test]
+        public void TestQueryProcessorResolveException()
+        {
+
+            var processor = new QueryProcessor(
+                t =>
+                    {
+                        throw new Exception("Cannot resolve type");
+                    });
+
+            Assert.Throws<QueryProcessorResolveHandlerException>(
+                () =>
+                    {
+                        processor.Process(new TestQuery());
+                    });
+        }
+
+        [Test]
+        public void TestQueryProcessorHandleException()
+        {
+
+            var processor = new QueryProcessor(t => new TestQueryHandlerException());
+
+            Assert.Throws<QueryProcessorHandleException>(
+                () =>
+                    {
+                        processor.Process(new TestQuery());
+                    });
+        }
+
     }
 }

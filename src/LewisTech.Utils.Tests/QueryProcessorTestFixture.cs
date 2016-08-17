@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using LewisTech.Utils.Query;
 using NUnit.Framework;
@@ -50,16 +51,72 @@ namespace LewisTech.Utils.Tests.QueryHandlers
             Trace.WriteLine("Test Finished " + stopwatch.ElapsedMilliseconds);
         }
 
-        //[DebuggerStepThrough]
-        //public Task<TResult> ProcessAsync<TResult>(IQuery<TResult> query)
-        //{
-        //    var handlerType =
-        //        typeof(IAsyncQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
+        [Test]
+        public void RunTestQueryReturnsCorrectHandler()
+        {
+            var stopwatch = Stopwatch.StartNew();
 
-        //    dynamic handler = _resolver(handlerType);
+            TestQueryHandler handler1 = null;
+            TestQueryHandler2 handler2 = null;
+            TestQueryHandler3 handler3 = null;
+            var processor = new QueryProcessor(
+                t =>
+                    {
+                        Console.WriteLine("Resolving Handler: " + t.DisplayName());
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler)))
+                        {
+                            return handler1 = new TestQueryHandler(stopwatch);
+                        }
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler2)))
+                        {
+                            return handler2 = new TestQueryHandler2();
+                        }
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler3)))
+                        {
+                            return handler3 = new TestQueryHandler3();
+                        }
+                        return null;
+                    });
 
-        //    return handler.Handle((dynamic)query);
-        //}
 
+            var result = processor.Process(new TestQuery());
+
+            Assert.IsNotNull(handler1);
+            Assert.IsTrue(handler1.HandleWasCalled);
+
+            var result2 = processor.Process(new TestQuery2());
+            Assert.IsNotNull(handler2);
+            Assert.IsTrue(handler2.HandleWasCalled);
+
+            var result3 = processor.Process(new TestQuery3());
+            Assert.IsNotNull(handler3);
+            Assert.IsTrue(handler3.HandleWasCalled);
+            
+            processor = new QueryProcessor(
+                t =>
+                    {
+                        Console.WriteLine("Resolving Handler: " + t.DisplayName());
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler)))
+                        {
+                            return handler1 = new TestQueryHandler(stopwatch);
+                        }
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler2)))
+                        {
+                            return handler2 = new TestQueryHandler2();
+                        }
+                        if (t.IsAssignableFrom(typeof(TestQueryHandler3)))
+                        {
+                            return handler3 = new TestQueryHandler3();
+                        }
+                        return null;
+                    });
+
+            result = processor.Process(new TestQuery());
+
+            Assert.IsNotNull(handler1);
+            Assert.IsTrue(handler1.HandleWasCalled);
+
+        }
+        
     }
 }

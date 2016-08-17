@@ -57,6 +57,7 @@
     <Compile Include="QueryHandlers\TestQuery.cs" />
     <Compile Include="QueryHandlers\TestQueryHandler.cs" />
     <Compile Include="QueryHandlers\TestQueryResult.cs" />
+    <Compile Include="TypeExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LewisTech.Utils\LewisTech.Utils.csproj">

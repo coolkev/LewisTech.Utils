@@ -10,6 +10,8 @@ namespace LewisTech.Utils.Tests.QueryHandlers
         public bool HandleWasStarted { get; private set; }
         public bool HandleWasFinished { get; private set; }
 
+        public Stopwatch Stopwatch => _stopwatch;
+
         private readonly Stopwatch _stopwatch;
 
         public TestAsyncQueryHandler(Stopwatch stopwatch)
